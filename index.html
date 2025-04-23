@@ -104,16 +104,22 @@
   </div>
 
   <div id="page3" class="container hidden">
-    <button class="back-btn" onclick="showPage('page1')">Home</button>
-    <h2>Jubbbbb😄</h2>
-    <img src="01.jpeg" alt="Doraemon">
-  </div>
+  <button class="back-btn" onclick="showPage('page1')">Home</button>
+  <h2>Jubbbbb 😄</h2>
+
+  <!-- วิดีโอแทนภาพ -->
+  <video width="100%" controls autoplay muted loop>
+    <source src="03.mp4" type="video/mp4">
+    Your browser does not support the video tag.
+  </video>
+</div>
+
 
   <script>
     function countdown() {
       const countdownElement = document.getElementById("countdown");
-      //const targetDate = new Date(new Date().getTime() - 10000); // ลบ 10 วินาทีจากเวลาปัจจุบัน
-      const targetDate = new Date("2025-04-25T10:31:00").getTime();
+      const targetDate = new Date(new Date().getTime() - 10000); // ลบ 10 วินาทีจากเวลาปัจจุบัน
+      //const targetDate = new Date("2025-04-25T10:31:00").getTime();
 
       const interval = setInterval(() => {
         const now = new Date().getTime();
