@@ -92,14 +92,20 @@
     <button class="back-btn" onclick="showPage('page1')">Home</button>
     <img src="https://cdn-icons-png.flaticon.com/512/684/684908.png" width="150" alt="Envelope">
     <div id="letter">
-      <p>Happy birthday krubbbb My boss baby 🎂🎉<br>ขอให้มีความสุขมาก ๆ<br>สมหวังทุกเรื่องเลย!</p>
+      <p>Happy birthday My boss baby 🎂🎉<br>ขอให้หนูเป็นคนสวย รวย เก่ง แล้วก็น่ารักแบบนี้ไปเรื่อยๆ นะ <br> ไม่ว่าจะเจออะไร ก็ขอให้ผ่านมันไปได้ด้วยความมั่นใจแบบที่หนูเป็นอยู่แล้ว <br>
+
+พี่ไม่พูดบ่อย แต่พี่รู้สึกโชคดีมากที่มีหนูอยู่ในชีวิตนะ :)
+
+
+
+<br>I love you to the moon and back krubb🤍</p>
       <button onclick="showPage('page3')">Next</button>
     </div>
   </div>
 
   <div id="page3" class="container hidden">
-    <button class="back-btn" onclick="showPage('page1')">กลับหน้าแรก</button>
-    <h2>โอเค จบแล้วนะ 😄</h2>
+    <button class="back-btn" onclick="showPage('page1')">Home</button>
+    <h2>Jubbbbb😄</h2>
     <img src="https://upload.wikimedia.org/wikipedia/en/0/02/Doraemon_character.png" width="200" alt="Doraemon">
   </div>
 
@@ -114,7 +120,7 @@
 
         if (distance < 0) {
           clearInterval(interval);
-          countdownElement.innerHTML = "สุขสันต์วันเกิด!";
+          countdownElement.innerHTML = "Happy birthday!";
           document.getElementById("toPage2").classList.remove("hidden");
           return;
         }
