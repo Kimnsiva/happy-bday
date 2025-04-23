@@ -22,6 +22,7 @@
       justify-content: center;
       align-items: center;
       min-height: 100vh;
+      overflow-x: hidden;
     }
 
     .container {
@@ -31,6 +32,8 @@
       background-color: white;
       box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
       border-radius: 16px;
+      position: relative;
+      z-index: 1;
     }
 
     img {
@@ -77,13 +80,26 @@
       padding: 8px 12px;
       font-size: 14px;
       border-radius: 6px;
+      z-index: 2;
+    }
+
+    canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 0;
     }
   </style>
 </head>
 <body>
+  <canvas id="fireworks"></canvas>
+
   <div id="page1" class="container">
     <h1>จะถึงวันเกิดคุณหวานใจของเค้าแล้ววว🎂</h1>
-    <img src="01.jpeg" alt="Doraemon">
+    <img id="birthdayImage" src="01.jpeg" alt="Doraemon">
     <h2 id="countdown"></h2>
     <button id="toPage2" class="hidden">Next</button>
   </div>
@@ -92,34 +108,25 @@
     <button class="back-btn" onclick="showPage('page1')">Home</button>
     <img src="02.jpeg" width="150" alt="Envelope">
     <div id="letter">
-      <p>Happy birthday My boss baby 🎂🎉<br>ขอให้หนูเป็นคนสวย รวย เก่ง <br>แล้วก็น่ารักแบบนี้ไปเรื่อยๆ นะ <br> ไม่ว่าจะเจออะไร ก็ขอให้ผ่านมันไปได้ด้วยความมั่นใจแบบที่หนูเป็นอยู่แล้ว <br>
-<br>
-พี่ไม่พูดบ่อย แต่พี่รู้สึกโชคดีมากที่มีหนูอยู่ในชีวิตนะ :)
-
-
-<br><br>
-<br>I love you to the moon and back krubb🤍</p>
+      <p>Happy birthday My boss baby 🎂🎉<br>ขอให้หนูเป็นคนสวย รวย เก่ง <br>แล้วก็น่ารักแบบนี้ไปเรื่อยๆ นะ <br> ไม่ว่าจะเจออะไร ก็ขอให้ผ่านมันไปได้ด้วยความมั่นใจแบบที่หนูเป็นอยู่แล้ว <br><br>พี่ไม่พูดบ่อย แต่พี่รู้สึกโชคดีมากที่มีหนูอยู่ในชีวิตนะ :)<br><br>I love you to the moon and back krubb🤍</p>
       <button onclick="showPage('page3')">Next</button>
     </div>
   </div>
 
   <div id="page3" class="container hidden">
-  <button class="back-btn" onclick="showPage('page1')">Home</button>
-  <h2>Jubbbbb 😄</h2>
-
-  <!-- วิดีโอแทนภาพ -->
-  <video width="100%" controls autoplay muted loop>
-    <source src="767090581.303630.mp4" type="video/mp4">
-    Your browser does not support the video tag.
-  </video>
-</div>
-
+    <button class="back-btn" onclick="showPage('page1')">Home</button>
+    <h2>Jubbbbb 😄</h2>
+    <video width="100%" controls autoplay muted loop>
+      <source src="767090581.303630.mp4" type="video/mp4">
+      Your browser does not support the video tag.
+    </video>
+  </div>
 
   <script>
     function countdown() {
       const countdownElement = document.getElementById("countdown");
-      const targetDate = new Date(new Date().getTime() - 10000); // ลบ 10 วินาทีจากเวลาปัจจุบัน
-      //const targetDate = new Date("2025-04-25T10:31:00").getTime();
+      const birthdayImage = document.getElementById("birthdayImage");
+      const targetDate = new Date("2025-04-25T10:31:00").getTime();
 
       const interval = setInterval(() => {
         const now = new Date().getTime();
@@ -129,6 +136,12 @@
           clearInterval(interval);
           countdownElement.innerHTML = "Happy birthday!";
           document.getElementById("toPage2").classList.remove("hidden");
+
+          // เปลี่ยนรูปภาพ
+          birthdayImage.src = "02.jpeg";
+
+          // เริ่มพลุ
+          startFireworks();
           return;
         }
 
@@ -154,6 +167,57 @@
     document.getElementById("toPage2").addEventListener("click", () => showPage("page2"));
 
     countdown();
+
+    // เอฟเฟคพลุ
+    function startFireworks() {
+      const canvas = document.getElementById('fireworks');
+      const ctx = canvas.getContext('2d');
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+
+      const particles = [];
+
+      function createFirework() {
+        for (let i = 0; i < 100; i++) {
+          particles.push({
+            x: canvas.width / 2,
+            y: canvas.height / 2,
+            angle: Math.random() * 2 * Math.PI,
+            speed: Math.random() * 5 + 2,
+            radius: Math.random() * 2 + 1,
+            life: 100,
+            color: `hsl(${Math.random() * 360}, 100%, 50%)`
+          });
+        }
+      }
+
+      function animate() {
+        ctx.fillStyle = 'rgba(0, 0, 0, 0.1)';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+        for (let i = particles.length - 1; i >= 0; i--) {
+          const p = particles[i];
+          p.x += Math.cos(p.angle) * p.speed;
+          p.y += Math.sin(p.angle) * p.speed;
+          p.life--;
+
+          if (p.life <= 0) {
+            particles.splice(i, 1);
+            continue;
+          }
+
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, p.radius, 0, 2 * Math.PI);
+          ctx.fillStyle = p.color;
+          ctx.fill();
+        }
+
+        requestAnimationFrame(animate);
+      }
+
+      createFirework();
+      animate();
+    }
   </script>
 </body>
 </html>
