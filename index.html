@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Happy Birthday</title>
+  <style>
+    :root {
+      --primary-color: #0d47a1;
+      --accent-color: #42a5f5;
+      --bg-color: #f5faff;
+      --text-color: #1a237e;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    .container {
+      text-align: center;
+      padding: 20px;
+      max-width: 500px;
+      background-color: white;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+      border-radius: 16px;
+    }
+
+    img {
+      width: 100%;
+      max-width: 400px;
+      height: auto;
+      border-radius: 12px;
+      margin-bottom: 20px;
+    }
+
+    button {
+      margin-top: 20px;
+      padding: 10px 20px;
+      background-color: var(--accent-color);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    button:hover {
+      background-color: #2196f3;
+    }
+
+    #letter {
+      display: none;
+      animation: slideUp 2s forwards;
+    }
+
+    @keyframes slideUp {
+      from { transform: translateY(100px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+
+    .hidden { display: none; }
+
+    .back-btn {
+      position: fixed;
+      top: 10px;
+      left: 10px;
+      background-color: var(--primary-color);
+      padding: 8px 12px;
+      font-size: 14px;
+      border-radius: 6px;
+    }
+  </style>
+</head>
+<body>
+  <div id="page1" class="container">
+    <h1>Countdown สู่วันเกิด 🎂</h1>
+    <img src="https://upload.wikimedia.org/wikipedia/en/0/02/Doraemon_character.png" alt="Doraemon">
+    <h2 id="countdown"></h2>
+    <button id="toPage2" class="hidden">Next</button>
+  </div>
+
+  <div id="page2" class="container hidden">
+    <button class="back-btn" onclick="showPage('page1')">กลับหน้าแรก</button>
+    <img src="https://cdn-icons-png.flaticon.com/512/684/684908.png" width="150" alt="Envelope">
+    <div id="letter">
+      <p>สุขสันต์วันเกิดนะจ๊ะ 🎉<br>ขอให้มีความสุขมาก ๆ<br>สมหวังทุกเรื่องเลย!</p>
+      <button onclick="showPage('page3')">Next</button>
+    </div>
+  </div>
+
+  <div id="page3" class="container hidden">
+    <button class="back-btn" onclick="showPage('page1')">กลับหน้าแรก</button>
+    <h2>โอเค จบแล้วนะ 😄</h2>
+    <img src="https://upload.wikimedia.org/wikipedia/en/0/02/Doraemon_character.png" width="200" alt="Doraemon">
+  </div>
+
+  <script>
+    function countdown() {
+      const countdownElement = document.getElementById("countdown");
+      const targetDate = new Date(new Date().getTime() - 10000); // ลบ 10 วินาทีจากเวลาปัจจุบัน
+
+      const interval = setInterval(() => {
+        const now = new Date().getTime();
+        const distance = targetDate - now;
+
+        if (distance < 0) {
+          clearInterval(interval);
+          countdownElement.innerHTML = "สุขสันต์วันเกิด!";
+          document.getElementById("toPage2").classList.remove("hidden");
+          return;
+        }
+
+        const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+        countdownElement.innerHTML = `${days} วัน ${hours} ชม. ${minutes} นาที ${seconds} วิ`;
+      }, 1000);
+    }
+
+    function showPage(id) {
+      document.querySelectorAll('.container').forEach(el => el.classList.add('hidden'));
+      document.getElementById(id).classList.remove('hidden');
+      if (id === 'page2') {
+        setTimeout(() => document.getElementById('letter').style.display = 'block', 1000);
+      } else {
+        document.getElementById('letter').style.display = 'none';
+      }
+    }
+
+    document.getElementById("toPage2").addEventListener("click", () => showPage("page2"));
+
+    countdown();
+  </script>
+</body>
+</html>
