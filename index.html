@@ -82,6 +82,20 @@
       border-radius: 6px;
       z-index: 2;
     }
+
+    #letter {
+  display: none;
+  opacity: 0;
+  transform: translateY(50px);
+  transition: all 1s ease;
+}
+
+#letter.show {
+  display: block;
+  opacity: 1;
+  transform: translateY(0);
+}
+
   </style>
 </head>
 <body>
@@ -93,20 +107,29 @@
   </div>
 
   <div id="page2" class="container hidden">
-    <button class="back-btn" onclick="showPage('page1')">Home</button>
-    <img src="022.jpeg" width="150" alt="Envelope">
-    <div id="letter">
-      <p>Happy birthday My boss baby 🎂🎉<br>
-              ขออำนาจคุณพระแก้วมรกต <br> ดลบันดาลให้หนูพบความสุขขี<br>
-              ขอวันคล้ายวันเกิดนี้มีแต่สวัสดี<br> สุขสันต์วันเกิดตลอดปีทุกคืนวัน<br>
-              ขอให้หนูเป็นคนสวย รวย เก่ง <br>ยอดขายเดือนละ 100 คัน <br>
-              แล้วก็น่ารักแบบนี้ไปเรื่อยๆ นะค้าบไอ้ต้าวแพนกวิ้น🐧 <br>
-              ไม่ว่าจะเจออะไร ก็ขอให้ผ่านมันไปได้ด้วยความมั่นใจแบบที่หนูเป็นอยู่แล้วนะ <br><br>
-              Not gonna lie, having you in my life is the best thing ever. :)<br>
-              I love you to the moon and back krubb🤍</p>
-      <button onclick="showPage('page3')">Next</button>
-    </div>
+  <button class="back-btn" onclick="showPage('page1')">Home</button>
+  
+  <!-- ซองจดหมาย -->
+  <img src="022.jpeg" width="150" alt="Envelope" style="margin-bottom: 10px;">
+  <button id="openLetterBtn">เปิดซองจดหมาย 💌</button>
+
+  <!-- จดหมาย -->
+  <div id="letter" class="hidden">
+    <img src="022.jpeg" width="200" alt="Opened Letter" style="margin-top: 20px;">
+    <p style="margin-top: 20px;">
+      Happy birthday My boss baby 🎂🎉<br>
+      ขออำนาจคุณพระแก้วมรกต <br> ดลบันดาลให้หนูพบความสุขขี<br>
+      ขอวันคล้ายวันเกิดนี้มีแต่สวัสดี<br> สุขสันต์วันเกิดตลอดปีทุกคืนวัน<br>
+      ขอให้หนูเป็นคนสวย รวย เก่ง <br>ยอดขายเดือนละ 100 คัน <br>
+      แล้วก็น่ารักแบบนี้ไปเรื่อยๆ นะค้าบไอ้ต้าวแพนกวิ้น🐧 <br>
+      ไม่ว่าจะเจออะไร ก็ขอให้ผ่านมันไปได้ด้วยความมั่นใจแบบที่หนูเป็นอยู่แล้วนะ <br><br>
+      Not gonna lie, having you in my life is the best thing ever. :)<br>
+      I love you to the moon and back krubb🤍
+    </p>
+    <button onclick="showPage('page3')">Next</button>
   </div>
+</div>
+
 
   <div id="page3" class="container hidden">
     <button class="back-btn" onclick="showPage('page1')">Home</button>
@@ -156,6 +179,17 @@
     document.getElementById("toPage2").addEventListener("click", () => showPage("page2"));
 
     countdown();
+
+
+    document.getElementById("openLetterBtn").addEventListener("click", () => {
+  const letter = document.getElementById("letter");
+  letter.classList.remove("hidden");
+  setTimeout(() => {
+    letter.classList.add("show");
+  }, 50);
+  document.getElementById("openLetterBtn").style.display = "none";
+});
+
   </script>
 </body>
 </html>
