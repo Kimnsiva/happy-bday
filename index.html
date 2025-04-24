@@ -86,7 +86,7 @@
 </head>
 <body>
   <div id="page1" class="container">
-    <h1>Bae’s birthday is coming up real soon — my cutie penguin 🐧💖</h1>
+    <h1>Bae’s birthday is coming up soon — my cutie penguin 🐧💖</h1>
     <img id="birthdayImage" src="01.jpeg" alt="Doraemon">
     <h2 id="countdown"></h2>
     <button id="toPage2" class="hidden">Next</button>
@@ -120,7 +120,8 @@
   <script>
     function countdown() {
       const countdownElement = document.getElementById("countdown");
-      const targetDate = new Date("2025-04-25T00:00:00").getTime();
+      //  const targetDate = new Date("2025-04-25T10:31:00").getTime();
+      const targetDate = new Date("2025-04-01T10:31:00").getTime();
 
       const interval = setInterval(() => {
         const now = new Date().getTime();
