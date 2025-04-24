@@ -96,6 +96,18 @@
   transform: translateY(0);
 }
 
+    .letter-box {
+  opacity: 0;
+  transform: translateY(50px);
+  transition: all 1s ease;
+}
+
+.letter-box.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+
   </style>
 </head>
 <body>
@@ -114,7 +126,8 @@
   <button id="openLetterBtn">เปิดซองจดหมาย 💌</button>
 
   <!-- จดหมาย -->
-  <div id="letter" class="hidden">
+  <div id="letter" class="letter-box hidden">
+
     <img src="022.jpeg" width="200" alt="Opened Letter" style="margin-top: 20px;">
     <p style="margin-top: 20px;">
       Happy birthday My boss baby 🎂🎉<br>
@@ -180,15 +193,15 @@
 
     countdown();
 
-
-    document.getElementById("openLetterBtn").addEventListener("click", () => {
+document.getElementById("openLetterBtn").addEventListener("click", () => {
   const letter = document.getElementById("letter");
-  letter.classList.remove("hidden");
+  letter.classList.remove("hidden");     // ให้แสดง div ขึ้นก่อน
   setTimeout(() => {
-    letter.classList.add("show");
-  }, 50);
+    letter.classList.add("show");        // ค่อยทำ animation
+  }, 100); // delay นิดนึงเพื่อให้ transition ทำงาน
   document.getElementById("openLetterBtn").style.display = "none";
 });
+
 
   </script>
 </body>
