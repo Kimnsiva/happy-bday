@@ -82,38 +82,9 @@
       border-radius: 6px;
       z-index: 2;
     }
-
-    canvas {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      pointer-events: none;
-      z-index: 0;
-    }
-
-    .balloon {
-      position: absolute;
-      bottom: -100px;
-      width: 40px;
-      height: 60px;
-      background-color: red;
-      border-radius: 50% 50% 45% 45%;
-      animation: floatUp 6s linear infinite;
-      opacity: 0.8;
-    }
-
-    @keyframes floatUp {
-      0% { transform: translateY(0); opacity: 1; }
-      100% { transform: translateY(-120vh); opacity: 0; }
-    }
   </style>
 </head>
 <body>
-  <canvas id="fireworks"></canvas>
-  <div id="balloon-container"></div>
-
   <div id="page1" class="container">
     <h1>Bae’s birthday is coming up real soon — my cutie penguin 🐧💖</h1>
     <img id="birthdayImage" src="01.jpeg" alt="Doraemon">
@@ -123,15 +94,14 @@
 
   <div id="page2" class="container hidden">
     <button class="back-btn" onclick="showPage('page1')">Home</button>
-    <img src="022.jpeg" width="150" alt="Envelope">
+    <img src="02.jpeg" width="150" alt="Envelope">
     <div id="letter">
       <p>Happy birthday My boss baby 🎂🎉<br>
               ขออำนาจคุณพระแก้วมรกต<br>
               ดลบันดาลให้หนูพบความสุขขี<br>
               ขอวันคล้ายวันเกิดนี้มีแต่สวัสดี<br>
               สุขสันต์วันเกิดตลอดปีทุกคืนวัน<br>
-              ขอให้หนูเป็นคนสวย รวย เก่ง <br>
-              ยอดขายเดือนละ 100 คัน <br>
+              ขอให้หนูเป็นคนสวย รวย เก่ง ยอดขายเดือนละ 100 คัน <br>
               แล้วก็น่ารักแบบนี้ไปเรื่อยๆ นะค้าบไอ้ต้าวแพนกวิ้น🐧 <br>
               ไม่ว่าจะเจออะไร ก็ขอให้ผ่านมันไปได้ด้วยความมั่นใจแบบที่หนูเป็นอยู่แล้วนะ <br> <br><br>Not gonna lie, having you in my life is the best thing ever. :)<br><br>I love you to the moon and back krubb🤍</p>
       <button onclick="showPage('page3')">Next</button>
@@ -150,8 +120,7 @@
   <script>
     function countdown() {
       const countdownElement = document.getElementById("countdown");
-    //  const targetDate = new Date("2025-04-25T10:31:00").getTime();
-      const targetDate = new Date("2025-04-01T10:31:00").getTime();
+      const targetDate = new Date("2025-04-25T00:00:00").getTime();
 
       const interval = setInterval(() => {
         const now = new Date().getTime();
@@ -161,8 +130,6 @@
           clearInterval(interval);
           countdownElement.innerHTML = "Happy birthday!";
           document.getElementById("toPage2").classList.remove("hidden");
-          startFireworks();
-          startBalloons();
           return;
         }
 
@@ -188,71 +155,6 @@
     document.getElementById("toPage2").addEventListener("click", () => showPage("page2"));
 
     countdown();
-
-    // พลุ
-    function startFireworks() {
-      const canvas = document.getElementById('fireworks');
-      const ctx = canvas.getContext('2d');
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-
-      const particles = [];
-
-      function createFirework() {
-        for (let i = 0; i < 100; i++) {
-          particles.push({
-            x: canvas.width / 2,
-            y: canvas.height / 2,
-            angle: Math.random() * 2 * Math.PI,
-            speed: Math.random() * 5 + 2,
-            radius: Math.random() * 2 + 1,
-            life: 100,
-            color: `hsl(${Math.random() * 360}, 100%, 50%)`
-          });
-        }
-      }
-
-      function animate() {
-        ctx.fillStyle = 'rgba(0, 0, 0, 0.1)';
-        ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-        for (let i = particles.length - 1; i >= 0; i--) {
-          const p = particles[i];
-          p.x += Math.cos(p.angle) * p.speed;
-          p.y += Math.sin(p.angle) * p.speed;
-          p.life--;
-
-          if (p.life <= 0) {
-            particles.splice(i, 1);
-            continue;
-          }
-
-          ctx.beginPath();
-          ctx.arc(p.x, p.y, p.radius, 0, 2 * Math.PI);
-          ctx.fillStyle = p.color;
-          ctx.fill();
-        }
-
-        requestAnimationFrame(animate);
-      }
-
-      createFirework();
-      animate();
-    }
-
-    // ลูกโป่ง
-    function startBalloons() {
-      const balloonContainer = document.getElementById('balloon-container');
-
-      for (let i = 0; i < 20; i++) {
-        const balloon = document.createElement('div');
-        balloon.className = 'balloon';
-        balloon.style.left = Math.random() * 100 + 'vw';
-        balloon.style.backgroundColor = `hsl(${Math.random() * 360}, 70%, 60%)`;
-        balloon.style.animationDuration = `${Math.random() * 5 + 5}s`;
-        balloonContainer.appendChild(balloon);
-      }
-    }
   </script>
 </body>
 </html>
